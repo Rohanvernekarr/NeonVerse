@@ -5,6 +5,7 @@ import gsap from 'gsap'
 import NeonNav from './components/NeonNav'
 import SmoothScroll from './components/SmoothScroll'
 import NeonHero from './components/NeonHero';
+import NeonFeatures from './components/NeonFeatures';
 
 
 export default function Home() {
@@ -31,6 +32,7 @@ export default function Home() {
         <NeonNav />
         <main>
           <NeonHero/>
+          <NeonFeatures/>
         </main>
         
       </div>
