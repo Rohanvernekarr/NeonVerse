@@ -151,9 +151,9 @@ export default function CosmicExperience() {
         {/* Stars Background */}
         {[...Array(200)].map((_, i) => (
           <Sphere key={i} args={[0.2, 16, 16]} position={[
-            (Math.random() - 0.5) * 400,
-            (Math.random() - 0.5) * 400,
-            (Math.random() - 0.5) * 400
+            (Math.random() - 0.5) * 300,
+            (Math.random() - 0.5) * 300,
+            (Math.random() - 0.5) * 300
           ]}>
             <meshBasicMaterial color="white" />
           </Sphere>
