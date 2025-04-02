@@ -28,7 +28,7 @@ export default function FuturisticFooter() {
   }, [])
   
   return (
-    <footer ref={footerRef} className="py-12 bg-black relative overflow-hidden">
+    <footer ref={footerRef} className="py-12  bg-black relative overflow-hidden">
       {/* Gradient line */}
       <div className="h-px w-full bg-gradient-to-r from-transparent via-gray-500 to-transparent opacity-20 mb-12"></div>
       
@@ -112,8 +112,7 @@ export default function FuturisticFooter() {
         
         <div className="flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-500 text-sm mb-4 md:mb-0">
-            © 2025 Futura. All rights reserved.
-          </p>
+            © 2025 NeonVerse.All rights reserved.</p>
           <div className="flex space-x-6">
             <Link href="#" className="text-gray-500 hover:text-gray-300 text-sm transition-colors duration-300">
               Privacy Policy

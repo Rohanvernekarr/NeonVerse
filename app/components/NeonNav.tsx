@@ -20,6 +20,15 @@ export default function FuturisticNav() {
   
   return (
     <nav className="fixed w-full z-50 backdrop-blur-md bg-black/50 border-b border-white/10">
+
+        {/* Grid overlay */}
+        <div 
+        className="absolute inset-0 pointer-events-none" 
+        style={{ 
+          backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px)',
+          backgroundSize: '40px 40px'
+        }} 
+      ></div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">

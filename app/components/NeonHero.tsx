@@ -6,11 +6,9 @@ import { OrbitControls, Sphere, MeshDistortMaterial } from '@react-three/drei'
 import * as THREE from 'three'
 import gsap from 'gsap'
 
-
 // Animated Sun component
 function AnimatedSun() {
   const meshRef = useRef<THREE.Mesh>(null)
-  
   
   useFrame((state) => {
     if (meshRef.current) {
@@ -48,9 +46,21 @@ function Planet({ size, color, distance, speed }: { size: number, color: string,
   })
 
   return (
+    <>
+    {/* Orbit Line */}
+     {/* Horizontal Orbit Line */}
+     <mesh rotation={[Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[distance - 0.1, distance + 0.1, 64]} />
+        <meshBasicMaterial color="white" transparent opacity={0.3} side={THREE.DoubleSide} />
+      </mesh>
+
+
+
+
     <Sphere ref={meshRef} args={[size, 32, 32]}>
       <meshStandardMaterial color={color} />
     </Sphere>
+    </>
   )
 }
 
@@ -90,47 +100,16 @@ export default function CosmicExperience() {
 
   return (
     <div ref={heroRef} className="relative h-screen flex items-center overflow-hidden">
-      {/* Gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black via-purple-900/20 to-black"></div>
-      
-      {/* Grid overlay */}
-      <div 
+
+<div 
         className="absolute inset-0 pointer-events-none" 
         style={{ 
           backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px)',
           backgroundSize: '40px 40px'
         }} 
       ></div>
-
-       {/* Hero content */}
-       <div className="relative z-10 h-full flex items-center ml-12">
-        <div className="container px-6 md:px-12">
-          <div className="flex flex-col gap-6 max-w-4xl">
-            <h1 className="hero-title text-5xl md:text-7xl font-bold">
-              <span className="block bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
-                Cosmic Explorer
-              </span>
-              <span className="text-white">Journey Through Space</span>
-            </h1>
-            
-            <p className="hero-subtitle text-xl md:text-2xl text-gray-300">
-              Witness the beauty of our solar system with interactive celestial exploration.
-            </p>
-            
-            <div className="hero-cta flex gap-4 mt-4">
-              <button className="px-8 py-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/30">
-                Start Journey
-              </button>
-              <button className="px-8 py-3 rounded-full border border-white/20 backdrop-blur-sm transition-all duration-300 hover:bg-white/10 text-white">
-                Learn More
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      {/* Combined 3D Scene */}
-      <Canvas camera={{ position: [0, 50, 150] }}>
+      {/* Canvas Background */}
+      <Canvas camera={{ position: [0, 50, 150] }} className="absolute inset-0">
         <ambientLight intensity={0.5} />
         <directionalLight position={[5, 5, 5]} intensity={1} />
         <pointLight position={[-10, -10, -5]} intensity={0.5} color="#8860ff" />
@@ -162,7 +141,30 @@ export default function CosmicExperience() {
         <OrbitControls enableZoom={true} />
       </Canvas>
 
-     
+      {/* Hero content overlaying the planets */}
+      <div className="absolute inset-0 flex items-center  z-10 pointer-events-none ">
+        <div className="max-w-4xl px-6 md:px-12">
+          <h1 className="hero-title text-5xl md:text-7xl font-bold text-white drop-shadow-lg">
+            <span className="block bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
+              Cosmic Explorer
+            </span>
+            <span className="text-white">Journey Through Space</span>
+          </h1>
+
+          <p className="hero-subtitle text-xl md:text-2xl text-gray-300 mt-4">
+            Witness the beauty of our solar system with interactive celestial exploration.
+          </p>
+
+          <div className="hero-cta flex gap-4 mt-4 ">
+            <button className="px-8 py-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/30">
+              Start Journey
+            </button>
+            <button className="px-8 py-3 rounded-full border border-white/20 backdrop-blur-sm transition-all duration-300 hover:bg-white/10 text-white">
+              Learn More
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
