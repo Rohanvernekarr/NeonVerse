@@ -6,6 +6,7 @@ import NeonNav from './components/NeonNav'
 import SmoothScroll from './components/SmoothScroll'
 import NeonHero from './components/NeonHero';
 import NeonFeatures from './components/NeonFeatures';
+import NeonFooter from './components/NeonFooter';
 
 
 export default function Home() {
@@ -34,7 +35,7 @@ export default function Home() {
           <NeonHero/>
           <NeonFeatures/>
         </main>
-        
+        <NeonFooter />
       </div>
     </SmoothScroll>
   )

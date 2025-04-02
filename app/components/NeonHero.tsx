@@ -6,9 +6,11 @@ import { OrbitControls, Sphere, MeshDistortMaterial } from '@react-three/drei'
 import * as THREE from 'three'
 import gsap from 'gsap'
 
+
 // Animated Sun component
 function AnimatedSun() {
   const meshRef = useRef<THREE.Mesh>(null)
+  
   
   useFrame((state) => {
     if (meshRef.current) {
