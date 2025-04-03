@@ -82,9 +82,9 @@ export default function FuturisticFooter() {
           </div>
           
           <div>
-            <h3 className="text-white font-semibold mb-4">Resources</h3>
+            <h3 className="text-white font-semibold mb-4">Resources g</h3>
             <ul className="space-y-2">
-              {['Documentation', 'API Reference', 'Blog', 'Community'].map((item) => (
+              {['Documentation', 'API Reference',  'Blog', 'Community'].map((item) => (
                 <li key={item}>
                   <Link href="#" className="text-gray-400 hover:text-white transition-colors duration-300">
                     {item}
