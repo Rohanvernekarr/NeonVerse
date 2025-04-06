@@ -7,6 +7,9 @@ import SmoothScroll from './components/SmoothScroll'
 import NeonHero from './components/NeonHero';
 import NeonFeatures from './components/NeonFeatures';
 import NeonFooter from './components/NeonFooter';
+import ContactSection from './components/ContactSection'
+import ParticleBackground from './components/ParticleBackground'
+import TechStack from './components/TechStack'
 
 
 export default function Home() {
@@ -30,12 +33,15 @@ export default function Home() {
   return (
     <SmoothScroll>
       <div ref={mainRef} className="min-h-screen bg-black text-white">
+      <ParticleBackground />
         <NeonNav />
         <main>
           <NeonHero/>
           <NeonFeatures/>
+          <TechStack />
+          <ContactSection />
         </main>
-        <NeonFooter />
+        <NeonFooter />  <ParticleBackground />
       </div>
     </SmoothScroll>
   )

@@ -1,68 +1,14 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
-import { OrbitControls, Sphere, MeshDistortMaterial } from '@react-three/drei'
-import * as THREE from 'three'
+import { useEffect, useRef, Suspense } from 'react'
+import dynamic from 'next/dynamic'
 import gsap from 'gsap'
 
-// Animated Sun component
-function AnimatedSun() {
-  const meshRef = useRef<THREE.Mesh>(null)
-  
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x = state.clock.getElapsedTime() * 0.1
-      meshRef.current.rotation.y = state.clock.getElapsedTime() * 0.15
-    }
-  })
-  
-  return (
-    <Sphere args={[5, 100, 200]} ref={meshRef}>
-      <MeshDistortMaterial 
-        color="#ffd700"
-        distort={0.3}
-        speed={1.2}
-        roughness={0.1}
-        metalness={0.9}
-        emissive="#ffd700"
-        emissiveIntensity={0.5}
-      />
-    </Sphere>
-  )
-}
-
-// Planet component
-function Planet({ size, color, distance, speed }: { size: number, color: string, distance: number, speed: number }) {
-  const meshRef = useRef<THREE.Mesh>(null)
-  const angleRef = useRef(0)
-
-  useFrame(() => {
-    angleRef.current += speed
-    if (meshRef.current) {
-      meshRef.current.position.x = Math.cos(angleRef.current) * distance
-      meshRef.current.position.z = Math.sin(angleRef.current) * distance
-    }
-  })
-
-  return (
-    <>
-    {/* Orbit Line */}
-     {/* Horizontal Orbit Line */}
-     <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[distance - 0.1, distance + 0.1, 64]} />
-        <meshBasicMaterial color="white" transparent opacity={0.3} side={THREE.DoubleSide} />
-      </mesh>
-
-
-
-
-    <Sphere ref={meshRef} args={[size, 32, 32]}>
-      <meshStandardMaterial color={color} />
-    </Sphere>
-    </>
-  )
-}
+// Create a separate component for the 3D scene
+const Scene = dynamic(() => import('./Scene'), { 
+  ssr: false,
+  loading: () => <div className="absolute inset-0 bg-black" />
+})
 
 export default function CosmicExperience() {
   const heroRef = useRef<HTMLDivElement>(null)
@@ -100,49 +46,19 @@ export default function CosmicExperience() {
 
   return (
     <div ref={heroRef} className="relative h-screen flex items-center overflow-hidden">
-
-<div 
+      <div 
         className="absolute inset-0 pointer-events-none" 
         style={{ 
           backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px)',
           backgroundSize: '40px 40px'
         }} 
       ></div>
-      {/* Canvas Background */}
-      <Canvas camera={{ position: [0, 50, 150] }} className="absolute inset-0">
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[5, 5, 5]} intensity={1} />
-        <pointLight position={[-10, -10, -5]} intensity={0.5} color="#8860ff" />
-        
-        {/* Animated Sun */}
-        <AnimatedSun />
-        
-        {/* Planets */}
-        <Planet size={1} color="gray" distance={10} speed={0.02} />
-        <Planet size={1.5} color="orange" distance={15} speed={0.015} />
-        <Planet size={2} color="blue" distance={22} speed={0.01} />
-        <Planet size={1.8} color="red" distance={30} speed={0.008} />
-        <Planet size={4} color="brown" distance={45} speed={0.005} />
-        <Planet size={3.5} color="goldenrod" distance={60} speed={0.004} />
-        <Planet size={2.8} color="lightblue" distance={75} speed={0.003} />
-        <Planet size={2.5} color="blue" distance={90} speed={0.002} />
+      
+      <Suspense fallback={<div className="absolute inset-0 bg-black" />}>
+        <Scene />
+      </Suspense>
 
-        {/* Stars Background */}
-        {[...Array(200)].map((_, i) => (
-          <Sphere key={i} args={[0.2, 16, 16]} position={[
-            (Math.random() - 0.5) * 300,
-            (Math.random() - 0.5) * 300,
-            (Math.random() - 0.5) * 300
-          ]}>
-            <meshBasicMaterial color="white" />
-          </Sphere>
-        ))}
-
-        <OrbitControls enableZoom={true} />
-      </Canvas>
-
-      {/* Hero content overlaying the planets */}
-      <div className="absolute inset-0 flex items-center  z-10 pointer-events-none ">
+      <div className="absolute inset-0 flex items-center z-10 pointer-events-none">
         <div className="max-w-4xl px-6 md:px-12">
           <h1 className="hero-title text-5xl md:text-7xl font-bold text-white drop-shadow-lg">
             <span className="block bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
@@ -155,7 +71,7 @@ export default function CosmicExperience() {
             Witness the beauty of our solar system with interactive celestial exploration.
           </p>
 
-          <div className="hero-cta flex gap-4 mt-4 ">
+          <div className="hero-cta flex gap-4 mt-4">
             <button className="px-8 py-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/30">
               Start Journey
             </button>
@@ -167,4 +83,4 @@ export default function CosmicExperience() {
       </div>
     </div>
   )
-}
+} 

@@ -1,4 +1,3 @@
-// components/FuturisticFooter.tsx
 'use client'
 
 import { useRef, useEffect } from 'react'
